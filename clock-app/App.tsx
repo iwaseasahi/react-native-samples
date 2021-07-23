@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+export default function Clock() {
+  const [date, setDate] = useState(() => new Date());
+
+  useEffect(() => {
+    const timerID = setInterval(() => {
+      setDate(new Date())
+    }, 1000)
+
+    return () => {
+      clearInterval(timerID);
+    }
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>現在時刻</Text>
+      <Text>{date.toLocaleTimeString()}</Text>
     </View>
-  );
-}
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
